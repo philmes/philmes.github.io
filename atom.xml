@@ -1,16 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[YARB]]></title>
   <link href="http://philmes.github.io/atom.xml" rel="self"/>
   <link href="http://philmes.github.io/"/>
-  <updated>2013-08-11T20:25:35+01:00</updated>
+  <updated>2013-08-11T20:31:52+01:00</updated>
   <id>http://philmes.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Phil Messenger]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java 7 with Elastic Map Reduce]]></title>
+    <link href="http://philmes.github.io/blog/2013/08/11/java-7-with-elastic-map-reduce/"/>
+    <updated>2013-08-11T20:28:00+01:00</updated>
+    <id>http://philmes.github.io/blog/2013/08/11/java-7-with-elastic-map-reduce</id>
+    <content type="html"><![CDATA[<h1>Using Java 7 on Amazon EMR</h1>
+
+<p>At <a href="http://www.intenthq.com">work</a> I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a single command.</p>
+
+<p>At the time of writing, the pre-canned EMR instances only support Java 6. This is a problem as we use Java 7 exclusively and have a pile of shared dependencies that we&rsquo;d like to reuse. Thankfully it&rsquo;s possible to use <a href="http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-bootstrap.html">bootstrap actions</a> to swap the pre-installed Java 6 for Java 7.</p>
+
+<p>The process is actually quite simple, but required a bunch of trial and error. First we replace the pre-configured Debian repositories with the official Wheezy repository:</p>
+
+<pre><code>#!/bin/bash
+sudo echo -e "deb http://http.us.debian.org/debian wheezy main contrib non-free" | sudo tee /etc/apt/sources.list
+sudo apt-get update
+</code></pre>
+
+<p>The OpenJDK 7 installer prompts for license acceptance, which doesn&rsquo;t work in a non-interactive session. Setting the <code>DEBIAN_FRONTEND</code> environment variable stops this:</p>
+
+<pre><code>export DEBIAN_FRONTEND=noninteractive
+</code></pre>
+
+<p>We then install OpenJDK 7:</p>
+
+<pre><code>sudo -E apt-get -y -q install openjdk-7-jdk
+sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+</code></pre>
+
+<p>And then forcibly remove Java 6. This is pretty nasty, but there are a bunch of EMR specific dependencies installed which explicitly depend on the pre-installed JDK (including hard coded paths).</p>
+
+<pre><code>sudo rm /usr/lib/jvm/java-6-sun
+sudo ln -s /usr/lib/jvm/java-7-openjdk-amd64 /usr/lib/jvm/java-6-sun
+</code></pre>
+
+<p>The full script:</p>
+
+<pre><code>#!/bin/bash
+sudo echo -e "deb http://http.us.debian.org/debian wheezy main contrib non-free" | sudo tee  /etc/apt/sources.list
+sudo apt-get update
+export DEBIAN_FRONTEND=noninteractive
+sudo -E apt-get -y -q install openjdk-7-jdk
+sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+
+sudo rm /usr/lib/jvm/java-6-sun
+sudo ln -s /usr/lib/jvm/java-7-openjdk-amd64 /usr/lib/jvm/java-6-sun
+</code></pre>
+
+<p>This script should be uploaded to an S3 bucket, and added as a bootstrap action:</p>
+
+<pre><code>./elastic-mapreduce --create --alive --log-uri s3://log-bucket/logs --num-instances 6 --master-instance-type m1.large --slave-instance-type m2.xlarge --key-pair &lt;pair&gt; --bootstrap-action s3://script-bucket/script
+</code></pre>
+
+<p>Your instances will take a little longer to startup then usual as the bootstrap action takes a while to run.</p>
+]]></content>
+  </entry>
   
 </feed>
