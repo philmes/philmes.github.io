@@ -40,6 +40,9 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
   
 
@@ -116,6 +119,9 @@
 <p>At <a href="http://www.intenthq.com">work</a> I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a single command.</p>
 
 <p>At the time of writing, the pre-canned EMR instances only support Java 6. This is a problem as we use Java 7 exclusively and have a pile of shared dependencies that we&rsquo;d like to reuse. Thankfully it&rsquo;s possible to use <a href="http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-bootstrap.html">bootstrap actions</a> to swap the pre-installed Java 6 for Java 7.</p>
+
+<!-- more -->
+
 
 <p>The process is actually quite simple, but required a bunch of trial and error. First we replace the pre-configured Debian repositories with the official Wheezy repository:</p>
 
