@@ -4,7 +4,7 @@
   <title><![CDATA[YARB]]></title>
   <link href="http://philmes.github.io/atom.xml" rel="self"/>
   <link href="http://philmes.github.io/"/>
-  <updated>2013-08-11T21:04:08+01:00</updated>
+  <updated>2013-09-04T20:14:03+01:00</updated>
   <id>http://philmes.github.io/</id>
   <author>
     <name><![CDATA[Phil Messenger]]></name>
@@ -14,13 +14,47 @@
 
   
   <entry>
+    <title type="html"><![CDATA[The toolsmith and the context switch]]></title>
+    <link href="http://philmes.github.io/blog/2013/08/31/the-toolsmith-and-the-context-switch/"/>
+    <updated>2013-08-31T20:28:00+01:00</updated>
+    <id>http://philmes.github.io/blog/2013/08/31/the-toolsmith-and-the-context-switch</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m now convinced that every team should have a toolsmith, who&rsquo;s raison d&#8217;etre is to automate and speed up repetitive tasks.</p>
+
+<p>Why?</p>
+
+<p>It&rsquo;s long been known that mental context switches are incredibly costly. Joel Spolsky <a href="http://www.joelonsoftware.com/articles/fog0000000022.html">wrote about</a> in relation to software development as far back as 2001. However most attention is paid to interruptions by colleagues. This ignores what is probably the bigger problem: context switches indirectly caused by slow and repetitive tasks.</p>
+
+<!-- more -->
+
+
+<p>A quintessential example of this is the compile-wait-deploy-wait-rage-at-websphere build cycle of death that afflicted J2EE developers of the last decade. Thankfully most of us have been relieved from that particular horror, but plenty of examples still remain: slow CI builds, slow application startups and  slow dependency resolution to name but a few.</p>
+
+<p>The interesting thing here is that it&rsquo;s not actually the slowness of the task itself that  directly causes a problem, but our short attention spans. It may only take 90 seconds to restart an app to test a change, but that&rsquo;s 90 seconds where I&rsquo;m tempted to switch to a browser and check my email. Sitting around watching Spring debug logs scroll by is <em>boring</em>!</p>
+
+<p>So, 90 seconds to restart the app. Five minutes reading and responding to email. Five minutes at least to refocus. Even if I resist the temptation eight times out of ten, that&rsquo;s a lot of wasted time.  It also has a parasitic drag on motivation &ndash; I want to be solving problems, not staring at the screen waiting for something to happen.</p>
+
+<p>Unfortunately a lot of developers seem quite.. well, not happy, but tolerant of this situation. I&rsquo;ve seen a lot of otherwise very talented developers wasting time waiting for their tools to catch up. The worrying thing is that this slowness is often easily fixed, either via amazing solutions like <a href="http://www.jrebel.com">JRebel</a> or by some simple tweaks to the software stack. So why are so many willing to put up with this?</p>
+
+<p>The individual reasons vary greatly. Familiarity is perhaps the biggest one. Many developers brought up on a diet of J2EE (or .NET, or any other static language dominated stack) are simply used to things taking a while, so much so that it&rsquo;s an accepted part of how they work.</p>
+
+<p>My favourite example of this is a situation I encountered recently at work. One of my team was tasked with implementing a system to extract topics from plain text. This system used a bunch of different data sources, many of which needed to be loaded into RAM at startup &ndash; in total about of 4 GB of static data. Even with a SSD this took a while, especially as a large chunk of that data was plain text which needed to be parsed first.</p>
+
+<p>Amazingly, he tolerated this until we noticed what was happening. A couple of simple batch jobs to do the parsing up front combined with a switch to mmap dropped the startup time to 8 seconds, and made the rest of the implementation process much quicker and less painful.</p>
+
+<p>The toolsmith is responsible for eliminating or reducing these problems. In an agile team this is unlikely to be a dedicated individual, but technical debt tasks that are worked on like any other task. It should also be something teams actively look for, ideally as part of the retrospective.</p>
+
+<p>Spreading the work around also has the positive side effect of exposing all members of the team to parts of the development infrastructure they usually wouldn&rsquo;t be exposed to. No longer will Bob be the only one who understands how the Jenkins cluster is configured.</p>
+
+<p>tl;dr: as developers we shouldn&rsquo;t be so accepting of slow tools.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Java 7 with Elastic Map Reduce]]></title>
     <link href="http://philmes.github.io/blog/2013/08/11/java-7-with-elastic-map-reduce/"/>
     <updated>2013-08-11T20:28:00+01:00</updated>
     <id>http://philmes.github.io/blog/2013/08/11/java-7-with-elastic-map-reduce</id>
-    <content type="html"><![CDATA[<h1>Using Java 7 on Amazon EMR</h1>
-
-<p>At <a href="http://www.intenthq.com">work</a> I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a single command.</p>
+    <content type="html"><![CDATA[<p>At <a href="http://www.intenthq.com">work</a> I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a single command.</p>
 
 <p>At the time of writing, the pre-canned EMR instances only support Java 6. This is a problem as we use Java 7 exclusively and have a pile of shared dependencies that we&rsquo;d like to reuse. Thankfully it&rsquo;s possible to use <a href="http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-bootstrap.html">bootstrap actions</a> to swap the pre-installed Java 6 for Java 7.</p>
 

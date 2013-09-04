@@ -13,7 +13,7 @@
   
     
   
-  <meta name="description" content="Using Java 7 on Amazon EMR At work I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 &hellip;">
+  <meta name="description" content="At work I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a &hellip;">
   
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -29,7 +29,7 @@
   <meta name="og:type" content="website" />
   <meta name="og:site_name" content="YARB" />
   <meta name="og:title" content="Java 7 with Elastic Map Reduce" />
-  <meta name="og:description" content="Using Java 7 on Amazon EMR At work I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 &hellip;" />
+  <meta name="og:description" content="At work I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a &hellip;" />
   <meta name="og:url" content="http://philmes.github.io/blog/2013/08/11/java-7-with-elastic-map-reduce/"/>
   <meta name="url" content="http://philmes.github.io/blog/2013/08/11/java-7-with-elastic-map-reduce/">
   
@@ -114,9 +114,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   </header>
 
 
-  <div class="entry-content"><h1>Using Java 7 on Amazon EMR</h1>
-
-<p>At <a href="http://www.intenthq.com">work</a> I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a single command.</p>
+  <div class="entry-content"><p>At <a href="http://www.intenthq.com">work</a> I use Amazon Elastic Map Reduce a lot &ndash; there&rsquo;s nothing quite like the convenience of firing up a 100 node Hadoop cluster with a single command.</p>
 
 <p>At the time of writing, the pre-canned EMR instances only support Java 6. This is a problem as we use Java 7 exclusively and have a pile of shared dependencies that we&rsquo;d like to reuse. Thankfully it&rsquo;s possible to use <a href="http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-bootstrap.html">bootstrap actions</a> to swap the pre-installed Java 6 for Java 7.</p>
 
@@ -209,6 +207,8 @@ sudo ln -s /usr/lib/jvm/java-7-openjdk-amd64 /usr/lib/jvm/java-6-sun
     
     
     
+      <a class="pull-right" href="/blog/2013/08/31/the-toolsmith-and-the-context-switch/" title="Next Post: The toolsmith and the context switch">The toolsmith and the context switch &raquo;</a>
+    
   </footer>
 
 </div>
@@ -223,6 +223,10 @@ sudo ln -s /usr/lib/jvm/java-7-openjdk-amd64 /usr/lib/jvm/java-6-sun
   <div class="span3">
     <h2>recent posts</h2>
     <ul class="recent_posts">
+      
+        <li>
+          <a href="/blog/2013/08/31/the-toolsmith-and-the-context-switch/">The toolsmith and the context switch</a>
+        </li>
       
         <li>
           <a href="/blog/2013/08/11/java-7-with-elastic-map-reduce/">Java 7 with Elastic Map Reduce</a>
